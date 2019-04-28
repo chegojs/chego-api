@@ -1,0 +1,27 @@
+{
+  "name": "chego-api",
+  "version": "0.0.1",
+  "description": "Chego API",
+  "main": "./lib/api.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "types": "./lib/api.d.ts",
+  "scripts": {
+    "build" : "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chegojs/chego-api.git"
+  },
+  "author": "Radoslaw Kamysz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chegojs/chego-api/issues"
+  },
+  "homepage": "https://github.com/chegojs/chego-api#readme",
+  "devDependencies": {
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  }
+}
