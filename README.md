@@ -4,7 +4,7 @@ This package contains interfaces, enums and types defined for [Chego](https://gi
 
 ## Install
 ```
-npm install --save chego-api
+npm install --save @chego/chego-api
 ```
 ## API Reference
 * [Interfaces](https://github.com/chegojs/chego-api/blob/master/src/interfaces.ts)
