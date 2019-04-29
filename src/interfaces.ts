@@ -3,7 +3,7 @@ import { QuerySyntaxEnum } from './enums';
 import { QuerySyntaxTemplate, QueryBuildFunction, CommandProp, AnyButFunction, StringOrProperty, Fn } from './types';
 
 export interface IChego {
-    executeQuery(query:IQuery):Promise<any>;
+    execute(query:IQuery):Promise<any>;
 }
 
 export interface IQuery extends IQueryMethods {
