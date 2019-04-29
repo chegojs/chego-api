@@ -1,7 +1,7 @@
 {
-  "name": "chego-api",
-  "version": "0.0.1",
-  "description": "Chego API",
+  "name": "@chego/chego-api",
+  "version": "1.0.0",
+  "description": "The API layer of Chego modules.",
   "main": "./lib/api.js",
   "files": [
     "lib/**/*"
@@ -20,6 +20,14 @@
     "url": "https://github.com/chegojs/chego-api/issues"
   },
   "homepage": "https://github.com/chegojs/chego-api#readme",
+  "keywords": [
+    "chego",
+    "api",
+    "database",
+    "fluent interface",
+    "universal",
+    "query"
+  ],
   "devDependencies": {
     "tslint": "^5.15.0",
     "typescript": "^3.4.3"
