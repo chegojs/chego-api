@@ -19,4 +19,3 @@ export type StringOrProperty = string | Property;
 export type QuerySyntaxTemplate = (...values:any[]) => (property?:any) => (item?:any) => any;
 export type QueryBuildFunction<T> = (query:T) => T;
 export type AnyButFunction = Exclude<PrimaryTypes | Obj, (...args:any[])=>any>;
-export type CommandProp<T> = QueryBuildFunction<T> | AnyButFunction;

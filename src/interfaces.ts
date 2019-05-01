@@ -1,6 +1,8 @@
 import { IQueryAndWhere, IQuerySelect } from './interfaces';
 import { QuerySyntaxEnum } from './enums';
-import { QuerySyntaxTemplate, QueryBuildFunction, CommandProp, AnyButFunction, StringOrProperty, Fn } from './types';
+import { QuerySyntaxTemplate, QueryBuildFunction, AnyButFunction, StringOrProperty, Fn } from './types';
+
+export type CommandProp = QueryBuildFunction<IQuery> | AnyButFunction;
 
 export interface IChego {
     execute(query:IQuery):Promise<any>;
@@ -48,10 +50,6 @@ export interface IQuerySchemeElement {
     params:any[];
 }
 
-export interface IQuerySchemeBuilder extends IQueryMethods {
-    build():IQuerySchemeElement[];
-}
-
 export interface IQueryAnd {
     and:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
 }
@@ -73,7 +71,7 @@ export interface IQueryDelete {
 }
 
 export interface IQueryEqualTo {
-    eq(value:CommandProp<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    eq(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryWhereExists {
@@ -85,7 +83,7 @@ export interface IQueryFrom {
 }
 
 export interface IQueryGT {
-    gt(value:CommandProp<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    gt(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryInsert {
@@ -97,7 +95,7 @@ export interface IQueryIs {
 }
 
 export interface IQueryLike {
-    like(value:CommandProp<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    like(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryLimit {
@@ -105,7 +103,7 @@ export interface IQueryLimit {
 }
 
 export interface IQueryLT {
-    lt(value:CommandProp<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    lt(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryNot {
@@ -147,10 +145,6 @@ export interface IQueryUpdate {
 export interface IQueryWhere {
     where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy;
 }
-
-type GetArgumentType<original extends Fn> =
-  original extends (...x: infer argumentsType) => any ? argumentsType : never
-
 
 export interface IQueryWrapped {
     wrapped(fn:QueryBuildFunction<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
