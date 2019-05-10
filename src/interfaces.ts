@@ -5,7 +5,7 @@ import { QuerySyntaxTemplate, QueryBuildFunction, AnyButFunction, StringOrProper
 export type CommandProp = QueryBuildFunction<IQuery> | AnyButFunction;
 
 export interface IChego {
-    execute(query:IQuery):Promise<any>;
+    execute(...queries:IQuery[]):Promise<any>;
 }
 
 export interface IQuery extends IQueryMethods {
@@ -36,7 +36,7 @@ export interface IDatabaseHelpers {
 
 export interface IDatabaseDriver {
     initialize(config:any):void;
-    execute(query:IQuery):Promise<any>;
+    execute(...queries:IQuery[]):Promise<any>;
 }
 
 export interface IQuerySchemeOld {
@@ -67,7 +67,7 @@ export interface IQueryBetween {
 }
 
 export interface IQueryDelete {
-    delete(...args:string[]):IQueryFrom;
+    delete():IQueryFrom;
 }
 
 export interface IQueryEqualTo {
@@ -179,6 +179,10 @@ export interface IQueryUnion {
 
 export interface IQueryGroupBy {
     groupBy(...values: StringOrProperty[]):IQueryWhere & IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+}
+
+export interface IQueryHaving {
+    having(...values: StringOrProperty[]):IQueryWhere & IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryMethods extends IQueryAnd,
