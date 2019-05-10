@@ -43,7 +43,10 @@ export enum QuerySyntaxEnum {
     Sqrt = 40,
     Pow = 41,
     Count = 42,
-    GroupBy = 43
+    GroupBy = 43,
+    Having = 44,
+    Using = 45,
+    In = 46,
 }
 
 export enum FilterResultEnum {

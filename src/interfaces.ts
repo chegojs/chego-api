@@ -46,7 +46,7 @@ export interface IQuerySchemeElement {
 }
 
 export interface IQueryAnd {
-    and:IQueryNot<IQueryAnd> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
+    and:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
 }
 
 export interface IQueryAndWhere {
@@ -54,7 +54,7 @@ export interface IQueryAndWhere {
 }
 
 export interface IQueryAre {
-    are:IQueryNot<IQueryAre> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+    are:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryBetween {
@@ -90,7 +90,7 @@ export interface IQueryInsert {
 }
 
 export interface IQueryIs {
-    is:IQueryNot<IQueryIs> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+    is:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryLike {
@@ -105,8 +105,12 @@ export interface IQueryLT {
     lt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
-export interface IQueryNot<T> {
-    not:T extends IQueryWhere ? IQueryExists & IQueryIn : IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+export interface IQueryNot {
+    not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+}
+
+export interface IQueryWhereNot {
+    not:IQueryExists & IQueryIn;
 }
 
 export interface IQueryNull {
@@ -114,7 +118,7 @@ export interface IQueryNull {
 }
 
 export interface IQueryOr {
-    or:IQueryNot<IQueryOr> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere;
+    or:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere;
 }
 
 export interface IQueryOrWhere {
@@ -142,7 +146,7 @@ export interface IQueryUpdate {
 }
 
 export interface IQueryWhere {
-    where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy & IQueryNot<IQueryWhere> & IQueryIn & IQueryExists;
+    where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy & IQueryWhereNot & IQueryIn & IQueryExists;
 }
 
 export interface IQueryWrapped {
@@ -198,7 +202,7 @@ IQueryIs,
 IQueryLike,
 IQueryLimit,
 IQueryLT,
-IQueryNot<any>,
+IQueryNot,
 IQueryOr,
 IQueryOrderBy,
 IQueryDelete,
@@ -217,7 +221,7 @@ IQueryOn,
 IQueryUsing,
 IQueryLeftJoin ,
 IQueryRightJoin ,
-IQueryJoin ,
+IQueryJoin,
 IQueryFullJoin,
 IQueryUnion,
 IQueryHaving,
