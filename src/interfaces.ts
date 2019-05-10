@@ -105,13 +105,7 @@ export interface IQueryLT {
     lt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
-export interface IQueryNot {
-    not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
-}
 
-export interface IQueryWhereNot {
-    not:IQueryExists & IQueryIn;
-}
 
 export interface IQueryNull {
     null: IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
@@ -193,8 +187,15 @@ export interface IQueryGroupBy {
     groupBy(...values: StringOrProperty[]):IQueryOrderBy & IQueryLimit & IQueryHaving;
 }
 
-export interface IQueryMethods extends IQueryAnd,
-IQueryAre,
+export interface IQueryWhereNot {
+    not:IQueryExists & IQueryIn;
+}
+
+export interface IQueryNot {
+    not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+}
+
+export interface IQueryMethods extends IQueryAre,
 IQueryBetween,
 IQueryEqualTo,
 IQueryGT,
@@ -202,8 +203,6 @@ IQueryIs,
 IQueryLike,
 IQueryLimit,
 IQueryLT,
-IQueryNot,
-IQueryOr,
 IQueryOrderBy,
 IQueryDelete,
 IQuerySelect,
@@ -226,5 +225,7 @@ IQueryFullJoin,
 IQueryUnion,
 IQueryHaving,
 IQueryGroupBy {
-    
+   not:any,
+   and:any,
+   or:any
 }
