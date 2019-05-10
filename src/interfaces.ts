@@ -39,11 +39,6 @@ export interface IDatabaseDriver {
     execute(...queries:IQuery[]):Promise<any>;
 }
 
-export interface IQuerySchemeOld {
-    getFromTheEnd(index:number):QuerySyntaxEnum;
-    add(element:QuerySyntaxEnum):IQuerySchemeOld;
-}
-
 export interface IQuerySchemeElement {
     index:number;
     type:QuerySyntaxEnum;
@@ -51,7 +46,7 @@ export interface IQuerySchemeElement {
 }
 
 export interface IQueryAnd {
-    and:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
+    and:IQueryNot<IQueryAnd> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
 }
 
 export interface IQueryAndWhere {
@@ -59,11 +54,11 @@ export interface IQueryAndWhere {
 }
 
 export interface IQueryAre {
-    are:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+    are:IQueryNot<IQueryAre> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryBetween {
-    between(min:number,max:number):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    between(min:number,max:number):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryDelete {
@@ -71,19 +66,23 @@ export interface IQueryDelete {
 }
 
 export interface IQueryEqualTo {
-    eq(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    eq(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
-export interface IQueryWhereExists {
-    whereExists(fn:Fn): IQueryOrder & IQueryLimit & IQueryAndWhere & IQueryOrWhere;
+export interface IQueryExists {
+    exists(fn:Fn): IQueryOrderBy & IQueryGroupBy & IQueryLimit & IQueryAndWhere & IQueryOrWhere;
+}
+
+export interface IQueryIn {
+    in(...values:AnyButFunction[]): IQueryOrderBy & IQueryGroupBy & IQueryLimit & IQueryAndWhere & IQueryOrWhere;
 }
 
 export interface IQueryFrom {
-    from(...tables: string[]): IQueryGroupBy & IQueryWhereExists & IQueryUnion & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrder & IQueryWhere & IQueryLimit & IQueryWrapped;
+    from(...tables: string[]): IQueryGroupBy & IQueryUnion & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryGT {
-    gt(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    gt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryInsert {
@@ -91,39 +90,39 @@ export interface IQueryInsert {
 }
 
 export interface IQueryIs {
-    is:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+    is:IQueryNot<IQueryIs> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryLike {
-    like(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    like(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryLimit {
-    limit(offsetOrCount: number, count?: number):IQueryWhere & IQueryOrder;
+    limit(offsetOrCount: number, count?: number):IQueryWhere & IQueryOrderBy;
 }
 
 export interface IQueryLT {
-    lt(...values:CommandProp[]):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    lt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
-export interface IQueryNot {
-    not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+export interface IQueryNot<T> {
+    not:T extends IQueryWhere ? IQueryExists & IQueryIn : IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryNull {
-    null: IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    null: IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryOr {
-    or:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere;
+    or:IQueryNot<IQueryOr> & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere;
 }
 
 export interface IQueryOrWhere {
     or:IQueryWhere;
 }
 
-export interface IQueryOrder {
-    orderBy(...values:StringOrProperty[]):IQueryWhere & IQueryLimit;
+export interface IQueryOrderBy {
+    orderBy(...values:StringOrProperty[]):IQueryGroupBy & IQueryLimit;
 }
 
 export interface IQuerySelect {
@@ -131,11 +130,11 @@ export interface IQuerySelect {
 }
 
 export interface IQuerySet {
-    set(data: object):IQueryOrder & IQueryWhere & IQueryLimit & IQueryWrapped;
+    set(data: object):IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryTo {
-    to(...tables: string[]): IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrder & IQueryWhere & IQueryLimit & IQueryWrapped;
+    to(...tables: string[]): IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryUpdate {
@@ -143,34 +142,43 @@ export interface IQueryUpdate {
 }
 
 export interface IQueryWhere {
-    where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy;
+    where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy & IQueryNot<IQueryWhere> & IQueryIn & IQueryExists;
 }
 
 export interface IQueryWrapped {
-    wrapped(fn:QueryBuildFunction<IQuery>):IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    wrapped(fn:QueryBuildFunction<IQuery>):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
+}
+
+export interface IQueryHaving {
+    having(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit;
 }
 
 /* JOIN */
 
 export interface IQueryOn {
     on(table:string, key:string):IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & 
-    IQueryOrder & IQueryWhere & IQueryLimit & IQueryWrapped;
+    IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
+}
+
+export interface IQueryUsing {
+    using(key:string):IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & 
+    IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryLeftJoin {
-    leftJoin(table:string, key:string):IQueryOn;
+    leftJoin(table:string, key:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryRightJoin {
-    rightJoin(table:string, key:string):IQueryOn;
+    rightJoin(table:string, key:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryFullJoin {
-    fullJoin(table:string, key:string):IQueryOn;
+    fullJoin(table:string, key:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryJoin {
-    join(table:string, key:string):IQueryOn;
+    join(table:string, key:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryUnion {
@@ -178,11 +186,7 @@ export interface IQueryUnion {
 }
 
 export interface IQueryGroupBy {
-    groupBy(...values: StringOrProperty[]):IQueryWhere & IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
-}
-
-export interface IQueryHaving {
-    having(...values: StringOrProperty[]):IQueryWhere & IQueryOrder & IQueryLimit & IQueryAnd & IQueryOr;
+    groupBy(...values: StringOrProperty[]):IQueryOrderBy & IQueryLimit & IQueryHaving;
 }
 
 export interface IQueryMethods extends IQueryAnd,
@@ -194,9 +198,9 @@ IQueryIs,
 IQueryLike,
 IQueryLimit,
 IQueryLT,
-IQueryNot,
+IQueryNot<any>,
 IQueryOr,
-IQueryOrder,
+IQueryOrderBy,
 IQueryDelete,
 IQuerySelect,
 IQueryUpdate,
@@ -206,14 +210,17 @@ IQueryFrom,
 IQueryInsert,
 IQueryTo,
 IQueryNull,
-IQueryWhereExists,
+IQueryExists,
+IQueryIn,
 IQuerySet,
-IQueryOn ,
+IQueryOn,
+IQueryUsing,
 IQueryLeftJoin ,
 IQueryRightJoin ,
 IQueryJoin ,
 IQueryFullJoin,
 IQueryUnion,
+IQueryHaving,
 IQueryGroupBy {
     
 }
