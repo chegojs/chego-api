@@ -98,21 +98,19 @@ export interface IQueryLike {
 }
 
 export interface IQueryLimit {
-    limit(offsetOrCount: number, count?: number):IQueryWhere & IQueryOrderBy;
+    limit(offsetOrCount: number, count?: number):IQueryGroupBy & IQueryOrderBy;
 }
 
 export interface IQueryLT {
     lt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
-
-
 export interface IQueryNull {
     null: IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryOr {
-    or:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere;
+    or:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
 }
 
 export interface IQueryOrWhere {
