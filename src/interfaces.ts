@@ -36,7 +36,7 @@ export interface IDatabaseHelpers {
 
 export interface IDatabaseDriver {
     initialize(config:any):void;
-    execute(...queries:IQuery[]):Promise<any>;
+    execute(queries:IQuery[]):Promise<any>;
 }
 
 export interface IQuerySchemeElement {
