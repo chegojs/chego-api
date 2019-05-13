@@ -6,6 +6,8 @@ export type CommandProp = QueryBuildFunction<IQuery> | AnyButFunction;
 
 export interface IChego {
     execute(...queries:IQuery[]):Promise<any>;
+    connect(callback?:Fn):void;
+    disconnect(callback?:Fn):void;
 }
 
 export interface IQuery extends IQueryMethods {
@@ -37,6 +39,8 @@ export interface IDatabaseHelpers {
 export interface IDatabaseDriver {
     initialize(config:any):void;
     execute(queries:IQuery[]):Promise<any>;
+    connect(callback?:Fn):void;
+    disconnect(callback?:Fn):void;
 }
 
 export interface IQuerySchemeElement {
