@@ -93,7 +93,7 @@ export interface IQueryExists {
 }
 
 export interface IQueryIn {
-    in(...values:AnyButFunction[]): IQueryOrderBy & IQueryGroupBy & IQueryLimit & IQueryAndWhere & IQueryOrWhere;
+    in(...values:CommandProp[]): IQueryOrderBy & IQueryGroupBy & IQueryLimit & IQueryAndWhere & IQueryOrWhere;
 }
 
 export interface IQueryFrom {
