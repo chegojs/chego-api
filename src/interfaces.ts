@@ -49,6 +49,14 @@ export interface IQuerySchemeElement {
     params:any[];
 }
 
+export interface IQueryHavingAnd {
+    and:IQueryHaving & IQueryHavingNot & IQueryHavingEqualTo & IQueryHavingLike & IQueryHavingGT & IQueryHavingLT & IQueryHavingBetween & IQueryHavingWrapped;
+}
+
+export interface IQueryHavingAndLite {
+    and:IQueryHaving & IQueryHavingWrapped;
+}
+
 export interface IQueryAnd {
     and:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryWhere & IQueryWrapped;
 }
@@ -65,12 +73,19 @@ export interface IQueryBetween {
     between(min:number,max:number):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
+export interface IQueryHavingBetween {
+    between(min:number,max:number):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
 export interface IQueryDelete {
     delete():IQueryFrom;
 }
 
 export interface IQueryEqualTo {
     eq(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
+}
+export interface IQueryHavingEqualTo {
+    eq(...values:CommandProp[]):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
 }
 
 export interface IQueryExists {
@@ -89,6 +104,10 @@ export interface IQueryGT {
     gt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
+export interface IQueryHavingGT {
+    gt(...values:CommandProp[]):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
 export interface IQueryInsert {
     insert(...items: object[]):IQueryTo;
 }
@@ -101,6 +120,10 @@ export interface IQueryLike {
     like(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
+export interface IQueryHavingLike {
+    like(...values:CommandProp[]):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
 export interface IQueryLimit {
     limit(offsetOrCount: number, count?: number):IQueryGroupBy & IQueryOrderBy;
 }
@@ -109,8 +132,24 @@ export interface IQueryLT {
     lt(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
+export interface IQueryHavingLT {
+    lt(...values:CommandProp[]):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
 export interface IQueryNull {
     null: IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
+}
+
+export interface IQueryHavingNull {
+    null: IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
+export interface IQueryHavingOr {
+    or:IQueryHaving & IQueryNot & IQueryHavingEqualTo & IQueryHavingLike & IQueryHavingGT & IQueryHavingLT & IQueryHavingBetween & IQueryHavingWrapped;
+}
+
+export interface IQueryHavingOrLite {
+    or:IQueryHaving & IQueryHavingWrapped;
 }
 
 export interface IQueryOr {
@@ -145,12 +184,16 @@ export interface IQueryWhere {
     where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy & IQueryWhereNot & IQueryIn & IQueryExists;
 }
 
+export interface IQueryHavingWrapped {
+    wrapped(fn:QueryBuildFunction<IQuery>):IQueryOrderBy & IQueryLimit & IQueryHavingAnd & IQueryHavingOr;
+}
+
 export interface IQueryWrapped {
     wrapped(fn:QueryBuildFunction<IQuery>):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
 
 export interface IQueryHaving {
-    having(...values:CommandProp[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit;
+    having(...values:CommandProp[]): IQueryHavingAndLite & IQueryHavingOrLite & IQueryHavingEqualTo & IQueryHavingLT & IQueryHavingGT & IQueryHavingBetween & IQueryHavingNot & IQueryHavingNull & IQueryHavingWrapped;
 }
 
 /* JOIN */
@@ -193,28 +236,25 @@ export interface IQueryWhereNot {
     not:IQueryExists & IQueryIn;
 }
 
+export interface IQueryHavingNot {
+    not:IQueryHavingEqualTo & IQueryHavingLike & IQueryHavingGT & IQueryHavingLT & IQueryHavingBetween & IQueryHavingNull;
+}
+
 export interface IQueryNot {
     not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryMethods extends IQueryAre,
-IQueryBetween,
-IQueryEqualTo,
-IQueryGT,
 IQueryIs,
-IQueryLike,
 IQueryLimit,
-IQueryLT,
 IQueryOrderBy,
 IQueryDelete,
 IQuerySelect,
 IQueryUpdate,
 IQueryWhere,
-IQueryWrapped,
 IQueryFrom,
 IQueryInsert,
 IQueryTo,
-IQueryNull,
 IQueryExists,
 IQueryIn,
 IQuerySet,
@@ -229,5 +269,12 @@ IQueryHaving,
 IQueryGroupBy {
    not:any,
    and:any,
-   or:any
+   or:any,
+   eq:any,
+   lt:any,
+   gt:any,
+   like:any,
+   null:any,
+   between:any,
+   wrapped:any
 }
