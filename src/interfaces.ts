@@ -207,7 +207,7 @@ export interface IQueryHaving {
 /* JOIN */
 
 export interface IQueryOn {
-    on(table:string, key:string):IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & 
+    on(keyA:string, keyB:string):IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & 
     IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
@@ -217,19 +217,19 @@ export interface IQueryUsing {
 }
 
 export interface IQueryLeftJoin {
-    leftJoin(table:string, key:string):IQueryOn & IQueryUsing;
+    leftJoin(table:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryRightJoin {
-    rightJoin(table:string, key:string):IQueryOn & IQueryUsing;
+    rightJoin(table:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryFullJoin {
-    fullJoin(table:string, key:string):IQueryOn & IQueryUsing;
+    fullJoin(table:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryJoin {
-    join(table:string, key:string):IQueryOn & IQueryUsing;
+    join(table:string):IQueryOn & IQueryUsing;
 }
 
 export interface IQueryUnion {
