@@ -69,6 +69,10 @@ export interface IQueryAre {
     are:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
+export interface IQueryWhereAre {
+    are:IQueryWhereIsNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull & IQueryIn;
+}
+
 export interface IQueryBetween {
     between(min:number,max:number):IQueryGroupBy & IQueryOrderBy & IQueryLimit & IQueryAnd & IQueryOr;
 }
@@ -114,6 +118,10 @@ export interface IQueryInsert {
 
 export interface IQueryIs {
     is:IQueryNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+}
+
+export interface IQueryWhereIs {
+    is:IQueryWhereIsNot & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull & IQueryIn;
 }
 
 export interface IQueryLike {
@@ -181,7 +189,7 @@ export interface IQueryUpdate {
 }
 
 export interface IQueryWhere {
-    where(...values:any[]):IQueryIs & IQueryAre & IQueryAndWhere & IQueryOrWhere & IQueryGroupBy & IQueryWhereNot & IQueryIn & IQueryExists;
+    where(...values:any[]):IQueryWhereIs & IQueryWhereAre & IQueryAndWhere & IQueryOrWhere & IQueryWhereNot & IQueryExists;
 }
 
 export interface IQueryHavingWrapped {
@@ -237,7 +245,11 @@ export interface IQueryGroupBy {
 }
 
 export interface IQueryWhereNot {
-    not:IQueryExists & IQueryIn;
+    not:IQueryExists;
+}
+
+export interface IQueryWhereIsNot {
+    not:IQueryIn & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
 export interface IQueryHavingNot {
@@ -248,9 +260,11 @@ export interface IQueryNot {
     not:IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
 }
 
-export interface IQueryMethods extends IQueryAre,
-IQueryIs,
-IQueryLimit,
+export interface IQueryWhereIsNot {
+    not:IQueryIn & IQueryEqualTo & IQueryLike & IQueryGT & IQueryLT & IQueryBetween & IQueryNull;
+}
+
+export interface IQueryMethods extends IQueryLimit,
 IQueryOrderBy,
 IQueryDelete,
 IQuerySelect,
@@ -281,5 +295,7 @@ IQueryUnionAll {
    like:any,
    null:any,
    between:any,
-   wrapped:any
+   wrapped:any,
+   in:any,
+   are:any
 }
