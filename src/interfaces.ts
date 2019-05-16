@@ -296,6 +296,6 @@ IQueryUnionAll {
    null:any,
    between:any,
    wrapped:any,
-   in:any,
+   is:any,
    are:any
 }
