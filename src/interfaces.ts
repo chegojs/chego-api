@@ -1,4 +1,4 @@
-import { IQueryAndWhere, IQuerySelect } from './interfaces';
+import { IQueryAndWhere, IQuerySelect, IQueryUnionAll } from './interfaces';
 import { QuerySyntaxEnum } from './enums';
 import { QuerySyntaxTemplate, QueryBuildFunction, AnyButFunction, StringOrProperty, Fn } from './types';
 
@@ -97,7 +97,7 @@ export interface IQueryIn {
 }
 
 export interface IQueryFrom {
-    from(...tables: string[]): IQueryGroupBy & IQueryUnion & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
+    from(...tables: CommandProp[]): IQueryGroupBy & IQueryUnion & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryGT {
@@ -225,7 +225,11 @@ export interface IQueryJoin {
 }
 
 export interface IQueryUnion {
-    union(all:boolean):IQuerySelect;
+    union(...fns:Fn[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit;
+}
+
+export interface IQueryUnionAll {
+    unionAll(...fns:Fn[]):IQueryGroupBy & IQueryOrderBy & IQueryLimit;
 }
 
 export interface IQueryGroupBy {
@@ -264,9 +268,10 @@ IQueryLeftJoin ,
 IQueryRightJoin ,
 IQueryJoin,
 IQueryFullJoin,
-IQueryUnion,
 IQueryHaving,
-IQueryGroupBy {
+IQueryGroupBy,
+IQueryUnion,
+IQueryUnionAll {
    not:any,
    and:any,
    or:any,
