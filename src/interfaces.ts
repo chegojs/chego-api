@@ -1,4 +1,3 @@
-import { IQueryAndWhere, IQuerySelect, IQueryUnionAll } from './interfaces';
 import { QuerySyntaxEnum } from './enums';
 import { QuerySyntaxTemplate, QueryBuildFunction, AnyButFunction, StringOrProperty, Fn } from './types';
 
@@ -101,7 +100,7 @@ export interface IQueryIn {
 }
 
 export interface IQueryFrom {
-    from(...tables: CommandProp[]): IQueryGroupBy & IQueryUnion & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
+    from(...tables: CommandProp[]): IQueryGroupBy & IQueryUnion & IQueryUnionAll & IQueryLeftJoin & IQueryRightJoin & IQueryJoin & IQueryFullJoin & IQueryOrderBy & IQueryWhere & IQueryLimit & IQueryWrapped;
 }
 
 export interface IQueryGT {
