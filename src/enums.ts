@@ -47,7 +47,10 @@ export enum QuerySyntaxEnum {
     Having = 44,
     Using = 45,
     In = 46,
-    UnionAll = 47
+    UnionAll = 47,
+    Replace = 48,
+    Intersect = 49,
+    Minus = 50
 }
 
 export enum FilterResultEnum {

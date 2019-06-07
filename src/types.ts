@@ -1,8 +1,8 @@
 import { QuerySyntaxEnum, SortingOrderEnum } from './enums';
 
-export type Fn = (...args:any[]) => any;
+export type Fn<T> = (...args:any[]) => T;
 export type PrimaryTypes = string | number | boolean | any[] | undefined | null;
-export type Obj = { [key:string] : PrimaryTypes | Obj };
+export type Obj = { [key:string] : any };
 export type ComparisonFunctions = QuerySyntaxEnum.Greatest | QuerySyntaxEnum.Least | QuerySyntaxEnum.Coalesce;
 export type AggregateFunctions = QuerySyntaxEnum.Max | QuerySyntaxEnum.Min | QuerySyntaxEnum.Sum | QuerySyntaxEnum.Avg | QuerySyntaxEnum.Count;
 export type MathFunctions = QuerySyntaxEnum.Sqrt | QuerySyntaxEnum.Pow;
@@ -19,3 +19,6 @@ export type StringOrProperty = string | Property;
 export type QuerySyntaxTemplate = (...values:any[]) => (property?:any) => (item?:any) => any;
 export type QueryBuildFunction<T> = (query:T) => T;
 export type AnyButFunction = Exclude<PrimaryTypes | Obj, (...args:any[])=>any>;
+export type Expression = { type:QuerySyntaxEnum, not:boolean, property:Property, value:any };
+export type ExpressionScope = { type:QuerySyntaxEnum, expressions:ExpressionOrExpressionScope[] };
+export type ExpressionOrExpressionScope = Expression | ExpressionScope;
