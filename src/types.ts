@@ -14,14 +14,18 @@ export type StringOrProperty = string | Property;
 export type QuerySyntaxTemplate = (...values:any[]) => (property?:any) => (item?:any) => any;
 export type QueryBuildFunction<T> = (query:T) => T;
 export type AnyButFunction = Exclude<PrimaryTypes | Obj, (...args:any[])=>any>;
-export type Expression = { type:QuerySyntaxEnum, not:boolean, property:Property, value:any };
-export type ExpressionScope = { type:QuerySyntaxEnum, expressions:ExpressionOrExpressionScope[] };
-export type ExpressionOrExpressionScope = Expression | ExpressionScope;
 
 export type TypedFunctionData<T,U> = { alias:string, type:U, param?:T };
 export type FunctionData = TypedFunctionData<any,QuerySyntaxEnum>;
 
 type XYParam = { x: number | string | Property, y: number | string | Property};
+type FunctionDataWithSingleParam<U> = TypedFunctionData<number | string | Property, U>;
+type FunctionDataWithMultipleParams<U> = TypedFunctionData<(number | string | Property)[], U>;
+type XYData<U> = TypedFunctionData<XYParam, U>;
+type DecimalData<U> = TypedFunctionData<DecimalParam, U>;
+type ExtractSubstringData<U> = TypedFunctionData<ExtractSubstringParam, U>;
+type ExtractCharsData<U> = TypedFunctionData<ExtractCharsParam, U>;
+type PadData<U> = TypedFunctionData<PadParam, U>;
 
 export type Atan2Param = XYParam;
 export type InsertParam = { value: number | string | Property, position: number, length: number, toInsert: number | string | Property };
@@ -39,14 +43,6 @@ export type PositionParam = { substring: string | Property, value: string | Prop
 export type ExtractCharsParam = { value: number | string | Property, charsCount: number };
 export type ExtractSubstringParam = { value: number | string | Property, start: number, length: number };
 export type DecimalParam = { value: number | string | Property, decimal: number };
-
-type FunctionDataWithSingleParam<U> = TypedFunctionData<number | string | Property, U>;
-type FunctionDataWithMultipleParams<U> = TypedFunctionData<(number | string | Property)[], U>;
-type XYData<U> = TypedFunctionData<XYParam, U>;
-type DecimalData<U> = TypedFunctionData<DecimalParam, U>;
-type ExtractSubstringData<U> = TypedFunctionData<ExtractSubstringParam, U>;
-type ExtractCharsData<U> = TypedFunctionData<ExtractCharsParam, U>;
-type PadData<U> = TypedFunctionData<PadParam, U>;
 
 export type PowData = TypedFunctionData<PowParam, QuerySyntaxEnum.Pow>;
 export type ConcatWsData = TypedFunctionData<ConcatWsParam, QuerySyntaxEnum.ConcatWs>;

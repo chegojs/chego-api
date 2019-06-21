@@ -1,6 +1,8 @@
 import { QuerySyntaxEnum } from './enums';
 import { QuerySyntaxTemplate, QueryBuildFunction, AnyButFunction, StringOrProperty, Fn } from './types';
 
+
+
 export type CommandProp = QueryBuildFunction<IQuery> | AnyButFunction;
 
 export interface IChego {
