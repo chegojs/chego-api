@@ -28,6 +28,16 @@ type ExtractCharsData<U> = TypedFunctionData<ExtractCharsParam, U>;
 type PadData<U> = TypedFunctionData<PadParam, U>;
 
 export type Atan2Param = XYParam;
+export type ModParam = XYParam;
+export type DivParam = XYParam;
+export type RoundParam = DecimalParam;
+export type TruncateParam = DecimalParam;
+export type FormatParam = DecimalParam;
+export type LeftParam = ExtractCharsParam;
+export type RightParam = ExtractCharsParam;
+export type MidParam = ExtractSubstringParam;
+export type SubstrParam = ExtractSubstringParam;
+export type LocateParam = { search: string, value: string, start?: number };
 export type InsertParam = { value: number | string | Property, position: number, length: number, toInsert: number | string | Property };
 export type PadParam = { value: number | string | Property, length: number, value2: number | string | Property };
 export type PowParam = { value: number | string | Property, exponent: number};
