@@ -1,5 +1,6 @@
 import { QuerySyntaxEnum, SortingOrderEnum } from './enums';
 
+export type ItemWithCustomId = { id:string, item:object, type:QuerySyntaxEnum.ItemWithCustomId };
 export type Fn<T> = (...args:any[]) => T;
 export type PrimaryTypes = string | number | boolean | any[] | undefined | null;
 export type Obj = { [key:string] : any };

@@ -115,6 +115,7 @@ export enum QuerySyntaxEnum {
     CastAsSigned = 117,
     CastAsUnsigned = 118,
     CastAsBinary = 119,
+    ItemWithCustomId = 120
 }
 
 export enum FilterResultEnum {
