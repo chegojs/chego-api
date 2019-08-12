@@ -7,6 +7,8 @@ export type Obj = { [key:string] : any };
 export type LogicalOperatorType = QuerySyntaxEnum.And | QuerySyntaxEnum.Or | QuerySyntaxEnum.Not;
 export type Limit = {offsetOrCount:number, count?:number};
 export type Table = { name:string, alias:string };
+export type CustomCondition = { condition:Fn<any>, table:Table };
+export type DirectPath = { directPath:string };
 export type Property = { table:Table, name:string, alias:string, type:QuerySyntaxEnum, temporary:boolean };
 export type LogicalOperatorScope = { type:QuerySyntaxEnum, properties:PropertyOrLogicalOperatorScope[] }
 export type PropertyOrLogicalOperatorScope = Property | LogicalOperatorScope;
@@ -15,7 +17,6 @@ export type StringOrProperty = string | Property;
 export type QuerySyntaxTemplate = (...values:any[]) => (property?:any) => (item?:any) => any;
 export type QueryBuildFunction<T> = (query:T) => T;
 export type AnyButFunction = Exclude<PrimaryTypes | Obj, (...args:any[])=>any>;
-
 export type TypedFunctionData<T,U> = { alias:string, type:U, param?:T };
 export type FunctionData = TypedFunctionData<any,QuerySyntaxEnum>;
 
