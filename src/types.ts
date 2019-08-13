@@ -6,6 +6,7 @@ export type PrimaryTypes = string | number | boolean | any[] | undefined | null;
 export type Obj = { [key:string] : any };
 export type LogicalOperatorType = QuerySyntaxEnum.And | QuerySyntaxEnum.Or | QuerySyntaxEnum.Not;
 export type Limit = {offsetOrCount:number, count?:number};
+export type Between = {min:number, max:number};
 export type Table = { name:string, alias:string };
 export type CustomCondition = { condition:Fn<any>, table:Table };
 export type DirectPath = { directPath:string };

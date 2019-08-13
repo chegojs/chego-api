@@ -1,6 +1,6 @@
 {
   "name": "@chego/chego-api",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "The API layer of Chego modules.",
   "main": "./lib/api.js",
   "files": [
