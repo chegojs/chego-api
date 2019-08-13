@@ -10,8 +10,8 @@ export type Table = { name:string, alias:string };
 export type CustomCondition = { condition:Fn<any>, table:Table };
 export type DirectPath = { directPath:string };
 export type Property = { table:Table, name:string, alias:string, type:QuerySyntaxEnum, temporary:boolean };
-export type LogicalOperatorScope = { type:QuerySyntaxEnum, properties:PropertyOrLogicalOperatorScope[] }
-export type PropertyOrLogicalOperatorScope = Property | LogicalOperatorScope;
+export type LogicalOperatorScope = { type:QuerySyntaxEnum, properties:ScopeContent[] }
+export type ScopeContent = Property | LogicalOperatorScope | CustomCondition;
 export type SortingData = { property:Property, order:SortingOrderEnum };
 export type StringOrProperty = string | Property;
 export type QuerySyntaxTemplate = (...values:any[]) => (property?:any) => (item?:any) => any;
